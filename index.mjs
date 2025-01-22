@@ -1,14 +1,14 @@
 import express from "express";
 import { products } from "./productData.mjs";
 const app = express();
-const port =process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 import cors from 'cors'
 
 
-app.use(cors({origin:"https://javednihari.com/"}))
+app.use(cors())
 
 
-app.get("/", (req, response) => {
+app.get("/", (request, response) => {
   response.send(`Hello World`);
 });
 

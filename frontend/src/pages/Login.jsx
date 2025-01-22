@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { API_KEY } from "../lib";
 
 export default function Login() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
@@ -16,7 +17,7 @@ export default function Login() {
       console.log("password: ", password);
 
       const response = await axios.post(
-        "https://dummyjson.com/auth/login",
+        `${API_KEY}/auth/login`,
         {
           username: "emilys",
           password: "emilyspass",

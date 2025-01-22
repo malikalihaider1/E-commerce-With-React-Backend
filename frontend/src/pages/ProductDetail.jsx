@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import { formatDistanceToNow } from "date-fns";
+import { API_KEY } from "../lib";
 
 export default function ProductCard() {
   const params = useParams();
   const { data, error, isLoading } = useSWR(
-    `https://dummyjson.com/product/${params.id}`,
+    `${API_KEY}/product/${params.id}`,
     axios,
   );
   const product = data?.data;

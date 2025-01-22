@@ -1,30 +1,24 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductCard from "../Components/ProjectCard";
-import SpinLoader from "../assets/images/SpinLoader.svg";
+import useProducts from "../hooks/useProducts";
 import { useSelector } from "react-redux";
 
 export default function Products() {
-  const API_KEY = "https://dummyjson.com/products?";
-
   const darkMode = useSelector((state) => state.darkMode.darkMode);
 
-  const [products, setProducts] = useState(null);
-
-  const getProductData = async () => {
-    const response = await axios(API_KEY);
-
-    setProducts(response?.data?.products);
-  };
-
-  // useEffect ak bar call hoga (in this case)
-  useEffect(() => {
-    getProductData();
-  }, []);
+  const { products, isLoading, error } = useProducts();
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const searchProducts = () => {
+    // const result = products?.filter((item) => {
+    //   return item.rating >= 4 && item.price > 50;
+    // });
+
+    // const result = products?.sort((a,b)=>{
+    //   return b.price - a.price
+    // })
+
     const result = products?.filter((item) => {
       return item.title.toLowerCase().includes(searchTerm);
     });
@@ -36,7 +30,9 @@ export default function Products() {
 
   return (
     <div
-      className={`container-x transition-colors duration-300 ${darkMode ? "bg-slate-700" : ""}`}
+      className={`container-x transition-colors duration-300 ${
+        darkMode ? "bg-slate-900" : ""
+      } `}
     >
       <input
         type="search"
@@ -49,18 +45,16 @@ export default function Products() {
         placeholder="Search your product"
       />
 
-      {products === null ? (
-        <img className={"m-auto "} src={SpinLoader} alt="SpinLoader" />
-      ) : null}
+      {products === null ? "Loading...." : null}
 
       <div className="flex flex-wrap justify-center gap-4">
-        {/* {searchKaResult.length === 0 ? "product not found" : ""} */}
+        {searchKaResult.length === 0 ? "product not found" : ""}
 
         {searchKaResult?.map((item) => (
           <ProductCard
             darkMode={darkMode}
-            key={item.id}
             id={item.id}
+            key={item.id}
             image={item.thumbnail}
             name={item.title}
             price={item.price}

@@ -1,0 +1,1 @@
+export const API_KEY = "https://e-commerce-with-react-backend-1ovz.vercel.app";
